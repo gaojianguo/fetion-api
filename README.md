@@ -9,8 +9,8 @@ https://github.com/gaojianguo/fetion-api.git
 
 ## 功能列表
 - 发送客服消息（文本、图片、语音、视频、图文）
-- 菜单操作（查询、创建、删除）
-- 分组操作（查询、创建、修改、设置用户到分组）
+- 菜单管理（查询、创建、删除）
+- 分组管理（查询、创建、修改、设置用户到分组）
 
 ## Installation
 
@@ -117,10 +117,165 @@ description(String)	描述
 url(String)	点击后跳转的链接
 media_id(Number)	图片的媒体ID
 ```
+## 菜单管理：高级菜单创建接口
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/6-1
+```js
+menu = {
+	 "button":[
+	   {
+	     "type":"click",
+	     "name":"今日歌曲",
+	     "key":"V1001_TODAY_MUSIC"
+	   },
+	   {
+	     "name":"菜单",
+	     "sub_button":[
+	       {
+	         "type":"view",
+	         "name":"搜索",
+	         "url":"http://www.soso.com/"
+	       },
+	       {
+	         "type":"click",
+	         "name":"赞一下我们",
+	         "key":"V1001_GOOD"
+	       }]
+	     }]
+	   }
+	 ]
+	}
 
+api.createMenu(menu, callback);
 
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
 
+Result:
+{"errcode":0,"errmsg":"ok"}
 
+参数说明：
+menu(Object)	菜单对象
+```
+## 菜单管理：高级菜单查询接口
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/6-2
+```js
+api.getMenu(callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{
+ "menu": {
+   "button":[
+     {"type":"click","name":"今日歌曲","key":"V1001_TODAY_MUSIC","sub_button":[]},
+     {"type":"click","name":"歌手简介","key":"V1001_TODAY_SINGER","sub_button":[]},
+     {"name":"菜单","sub_button":[
+       {"type":"view","name":"搜索","url":"http://www.soso.com/","sub_button":[]},
+       {"type":"view","name":"视频","url":"http://v.qq.com/","sub_button":[]},
+       {"type":"click","name":"赞一下我们","key":"V1001_GOOD","sub_button":[]}]
+     }
+   ]
+ }
+}
+```
+
+## 高级菜单删除接口
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/6-3
+```js
+api.removeMenu(callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{"errcode":0,"errmsg":"ok"}
+
+```
+
+## 分组管理：查询当前分组标签信息
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/5-4
+```js
+api.getGroups(callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{
+ "groups": [
+   {"id": 0, "name": "未分组", "count": 72596},
+   {"id": 1, "name": "黑名单", "count": 36}
+ ]
+}
+```
+
+## 分组管理：创建分组
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/5-7
+```js
+api.createGroup('groupname', callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{"group": {"id": 107, "name": "test"}}
+
+参数说明：
+name(String)	分组名字
+```
+## 分组管理：设置分组标签（更新分组）
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/5-5
+```js
+api.updateGroup(107, 'new groupname', callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{"errcode": 0, "errmsg": "ok"}
+
+id(Number)	分组ID
+name(String)	新的分组名字
+```
+
+## 分组管理：设置用户分组标签
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/5-6
+```js
+api.moveUserToGroup(openid, groupId, callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{"errcode": 0, "errmsg": "ok"}
+
+openid(String)	用户的openid
+groupId(Number)	分组ID
+```
+
+## 分组管理：删除分组
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/5-8
+```js
+api.removeGroup(groupId, callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{"errcode": 0, "errmsg": "ok"}
+
+参数说明：
+groupId(Number)	分组ID
+```
 
 ## 详细API
 原始API文档请参见：[消息接口指南](http://gz.feixin.10086.cn/Open/Index/apidoc)。
