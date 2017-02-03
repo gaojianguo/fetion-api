@@ -23,9 +23,9 @@ $ npm install fetion-api
 ## Usage
 
 ```js
-var WechatAPI = require('wechat-api');
+var FetionAPI = require('fetion-api');
 
-var api = new WechatAPI(appid, appsecret);
+var api = new FetionAPI(appid, appsecret);
 
 ```
 
