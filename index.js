@@ -7,5 +7,9 @@ API.mixin(require('./lib/api_menu'));
 API.mixin(require('./lib/api_group'));
 // 客服消息
 API.mixin(require('./lib/api_message'));
+// 媒体管理（上传、下载）
+API.mixin(require('./lib/api_media'));
+// 用户信息
+API.mixin(require('./lib/api_user'));
 
 module.exports = API;

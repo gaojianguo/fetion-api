@@ -11,6 +11,8 @@ https://github.com/gaojianguo/fetion-api.git
 - 发送客服消息（文本、图片、语音、视频、图文）
 - 菜单管理（查询、创建、删除）
 - 分组管理（查询、创建、修改、设置用户到分组）
+- 用户管理（获取关注用户列表）
+- 媒体管理（上传、下载）
 
 ## Installation
 
@@ -275,6 +277,67 @@ Result:
 
 参数说明：
 groupId(Number)	分组ID
+```
+##用户管理，获取关注用户列表
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/5-3
+```js
+api.getFollowers(callback);
+// or
+api.getFollowers(nextOpenid, callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{
+ "total":2,
+ "count":2,
+ "data":{
+   "openid":["","OPENID1","OPENID2"]
+ },
+ "next_openid":"NEXT_OPENID"
+}
+
+参数说明：
+nextOpenid(String)	调用一次之后，传递回来的nextOpenid。第一次获取时可不填
+```
+##媒体管理，上传多媒体文件
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/4-4#gr1
+```js
+api.uploadMedia('filepath', type, callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的对象
+
+Result:
+{"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
+
+Shortcut:
+exports.uploadImage(filepath, callback);
+exports.uploadVoice(filepath, callback);
+exports.uploadVideo(filepath, callback);
+exports.uploadThumb(filepath, callback);
+
+参数说明：
+filepath(String)	文件路径
+type(String)	媒体类型，可用值有image、voice、video、thumb
+callback(Function)	回调函数
+```
+
+##媒体管理，下载多媒体文件
+详细细节：http://gz.feixin.10086.cn/Open/Index/apidoc/flag/4-4#gr2
+```js
+api.getMedia('media_id', callback);
+
+Callback:
+err, 调用失败时得到的异常
+result, 调用正常时得到的文件Buffer对象
+res, HTTP响应对象
+
+参数说明：
+mediaId(String)	媒体文件的ID
 ```
 
 ## 详细API
